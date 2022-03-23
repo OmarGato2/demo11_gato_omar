@@ -98,9 +98,9 @@ function populateCardsDynamically() {
     let hikeCardGroup = document.getElementById("hikeCardGroup");
 
     db.collection("Hikes")
-    .orderBy("length_time")
-    .limit(2)
-    .get()
+        .orderBy("length_time")
+        .limit(2)
+        .get()
         .then(allHikes => {
             allHikes.forEach(doc => {
                 var hikeName = doc.data().name; //gets the name field
@@ -109,9 +109,12 @@ function populateCardsDynamically() {
                 let testHikeCard = hikeCardTemplate.content.cloneNode(true);
                 testHikeCard.querySelector('.card-title').innerHTML = hikeName;
 
+                // lines are new for demo#11
+                // line sets the id attribute for the <i> tag in the format of "save-hikdID"
+                // we know which hike to bookmark based on which hike was clicked
                 //testHikeCard.querySelector('.card-length').innerHTML = hikeLength;
-                
-                //NEW LINE: update to display length, duration, last updated
+                testHikeCard.querySelector('i').id = 'save-' + hikeID;
+                // line wil;l call a function to save the hikes to the user's document
                 testHikeCard.querySelector('.card-length').innerHTML =
                     "Length: " + doc.data().length + " km <br>" +
                     "Duration: " + doc.data().length_time + "min <br>" +
@@ -119,11 +122,12 @@ function populateCardsDynamically() {
 
 
                 testHikeCard.querySelector('a').onclick = () => setHikeData(hikeID);
-                testHikeCard.querySelector('img').src = `./images/${hikeID}.jpg`;
 
-                testHikeCard.querySelector('i').id = 'save-' + hikeID;
                 testHikeCard.querySelector('i').onclick = () => saveBookmark(hikeID);
 
+                testHikeCard.querySelector('.read-more').href = "eachHike.html?hikeName=" + hikeName + "&id=" + hikeID;
+
+                testHikeCard.querySelector('img').src = `./images/${hikeID}.jpg`;
                 hikeCardGroup.appendChild(testHikeCard);
             })
 

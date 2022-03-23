@@ -10,7 +10,7 @@ db.collection("Hikes").where("id", "==", hikeID)
 
         // We want to have one document per hike, so if the the result of 
         //the query is more than one, we can check it right now and clean the DB if needed.
-        if (size == 1) {
+        if (size = 1) {
             var thisHike = Hikes[0].data();
             hikeName = thisHike.name;
             console.log(hikeName);
@@ -24,7 +24,7 @@ db.collection("Hikes").where("id", "==", hikeID)
     });
 
 function writeReview() {
-    console.log("in");
+    console.log("in")
     let Title = document.getElementById("title").value;
     let Level = document.getElementById("level").value;
     let Season = document.getElementById("season").value;
@@ -32,6 +32,7 @@ function writeReview() {
     let Flooded = document.querySelector('input[name="flooded"]:checked').value;
     let Scrambled = document.querySelector('input[name="scrambled"]:checked').value;
     console.log(Title, Level, Season, Description, Flooded, Scrambled);
+
 
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
@@ -49,13 +50,13 @@ function writeReview() {
                         season: Season,
                         description: Description,
                         flooded: Flooded,
-                        scrambled: Scrambled,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    }).then(() => {
-                        window.location.href = "thanks.html"; //new line added
+                        scrambled: Scrambled
+
+                    }).then(()=>{
+                        window.location.href = "thanks.html";
                     })
                 })
-
+                   
         } else {
             // No user is signed in.
         }
